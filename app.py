@@ -1,14 +1,12 @@
 ##
-## flask imports
-##
 from flask import Flask, current_app
 from flask import (make_response,
                    redirect,
                    abort,
                    session,
-                   render_template, 
-                   url_for, 
-                   flash, 
+                   render_template,
+                   url_for,
+                   flash,
                    request)
 ##
 ## Flask extensions imports
@@ -18,9 +16,9 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, MigrateCommand
 from flask_wtf import FlaskForm
-from wtforms import (StringField, 
+from wtforms import (StringField,
     SubmitField, IntegerField, FloatField, SelectField)
-from wtforms.validators import (DataRequired, 
+from wtforms.validators import (DataRequired,
     InputRequired, Length, NumberRange)
 ##
 ## configuration file imports
@@ -30,7 +28,7 @@ import config
 
 ##
 ## creation of the Flask application instance
-## 
+##
 ## passing its configuration, and initializing the extensions along with the flask app.
 ## The web server passes all requests it receives from clients to this object for handling, using a protocol called Web Server Gateway Interface (WSGI)
 app = Flask(__name__, template_folder="templates")
@@ -56,7 +54,7 @@ class EnterYourInfosForm(FlaskForm):
     """
     Represents an <input type="number">
     """
-    age = IntegerField("Age", 
+    age = IntegerField("Age",
         validators=[DataRequired(), NumberRange(min=0, max=123)])
     """
     A text field, except all input is coerced to an float. Erroneous input is ignored and will not be accepted as a value
@@ -74,7 +72,7 @@ class EnterYourInfosForm(FlaskForm):
     Represents an <input type="submit">. This allows checking if a given submit button has been pressed.
     """
     submit = SubmitField("Submit")
-    
+
     #def clear(self):
         #self.name.data = ''
         #self.age.raw_data = ['']
@@ -89,7 +87,7 @@ class User(db.Model):
     """
     This class describes an user.
     SQLAlchemy extension for flask provides an ORM (Object-relational mappers).
-    An ORM is a tool that provides convertion from high-level (object-oriented) objects into low-level database instructions, so you don't have to directly deal with tables, documents, or query languages. 
+    An ORM is a tool that provides convertion from high-level (object-oriented) objects into low-level database instructions, so you don't have to directly deal with tables, documents, or query languages.
     + for SQLAlchemy the abstraction is even higher as you can choose different database engines that relies on the same Python object (hence, without having to rewrite or adapt code)!
     """
     __tablename__ = "users" # renaming the table and not default given name "user" not respecting the conventions
@@ -109,7 +107,7 @@ class User(db.Model):
 ## errors handlers
 ## def: is a function that returns a response when a type of error is raised.
 ## here only one is implemented for the 404 Not Found
-## The good old “chap, you made a mistake typing that URL” message. 
+## The good old “chap, you made a mistake typing that URL” message.
 ##
 
 @app.errorhandler(404)
@@ -142,8 +140,8 @@ def predict():
             ))
 
             # create a new "user" of the service
-            user = User(name=form.name.data, 
-                    age=form.age.data, 
+            user = User(name=form.name.data,
+                    age=form.age.data,
                     ticket_price=form.ticket_price.data,
                     sexe=form.sexe.data,
                     survived=prediction)
@@ -180,10 +178,10 @@ def test():
     unittest.TextTestRunner(verbosity=2).run(tests)
 
 if __name__ == "__main__":
-    # app.run(debug=True), 
+    # app.run(debug=True),
     # changed to manager
-    # using the extension 
-    # so you can pass options 
+    # using the extension
+    # so you can pass options
     # directly from the command-line
     with app.app_context():
         # create all the tables
